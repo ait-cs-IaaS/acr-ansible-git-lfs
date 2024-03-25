@@ -1,0 +1,17 @@
+---
+- name: Get repository script
+  ansible.builtin.get_url:
+    url: https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh
+    dest: /tmp/git-lfs-script.deb.sh
+    mode: '+x'
+
+- name: Adding the packagecloud repository
+  become: true
+  ansible.builtin.command:
+    cmd: ./git-lfs-script.deb.sh
+    chdir: /tmp/
+
+- name: Install git lfs
+  become: true
+  ansible.builtin.apt:
+    name: git-lfs
